@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Validators;
 
 namespace FluentValidationTest
 {
@@ -14,5 +15,13 @@ namespace FluentValidationTest
         }
 
         private bool BeAValidPostcode(string postcode) => !string.IsNullOrWhiteSpace(postcode) && postcode != "Matt";
+    }
+
+    public class CustomerGroupValidator : AbstractValidator<CustomerGroup>
+    {
+        public CustomerGroupValidator()
+        {
+            RuleForEach(x => x.Customers).SetValidator(new CustomerValidator());
+        }
     }
 }
